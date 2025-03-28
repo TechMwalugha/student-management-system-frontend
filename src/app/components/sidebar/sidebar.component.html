@@ -1,0 +1,10 @@
+<div class="card flex justify-content-center">
+    <p-sidebar [(visible)]="sidebarVisible">
+        <div class="container">
+            @for (item of items; track item.id) {
+                <app-sidebar-item [item]="item"/>
+            }
+        </div>
+    </p-sidebar>
+    <p-button styleClass="custom-btn" (onClick)="sidebarVisible = true" icon="pi pi-bars"></p-button>
+</div>

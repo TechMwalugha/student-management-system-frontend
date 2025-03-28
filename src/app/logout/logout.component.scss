@@ -1,0 +1,23 @@
+@use "sass:color";
+
+$primaryColor: #5369FC;
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .btn {
+        outline: none;
+        border:none;
+        display: block;
+        background-color: $primaryColor;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover {
+            background-color: color.adjust($primaryColor, $lightness: 10%);
+        }
+    }
+
+}

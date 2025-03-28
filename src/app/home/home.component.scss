@@ -1,0 +1,12 @@
+$primaryColor: #5369FC;
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .item {
+        background-color: $primaryColor;
+        padding: 1rem;
+    }
+}
