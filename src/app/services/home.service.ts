@@ -11,7 +11,10 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   getStudents() {
-    return this.http.get<{ content: any[] }>(this.getStudentsUrl, { withCredentials: true }).pipe(
+     const token = localStorage.getItem('jwtToken'); // ✅ Get token from local storage
+     const headers = { 'Authorization': `Bearer ${token}` }; 
+
+    return this.http.get<{ content: any[] }>(this.getStudentsUrl, { headers }).pipe(
       catchError(error => {
         console.error('Error fetching students:', error);
         return of({ content: [] }); // ✅ Return an empty content array if API call fails

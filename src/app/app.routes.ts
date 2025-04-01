@@ -17,6 +17,13 @@ export const routes: Routes = [
         }
     },
     {
+        path: 'generate',
+        loadComponent: () => {
+            return import('./generate/generate.component').then(m => m.GenerateComponent);
+        },
+        canActivate: [AuthGuardService]
+    },
+    {
         path: 'logout',
         loadComponent: () => {
             return import('./logout/logout.component').then(m => m.LogoutComponent);

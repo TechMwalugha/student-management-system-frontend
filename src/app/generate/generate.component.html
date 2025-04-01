@@ -1,0 +1,35 @@
+<div>
+    <app-sidebar />
+    <div class="content">
+        <p>Enter the number of students you want the system to generate</p>
+        <p class="small">Note: The system will generate random names and DOB, class, score and status for the students.</p>
+        <form (ngSubmit)="onSubmit()">
+            <mat-form-field class="example-full-width">
+                <mat-label>Number of students</mat-label>
+                <input 
+                type="number"
+                matInput [formControl]="countFormControl" 
+                [errorStateMatcher]="matcher"
+                placeholder="1"
+  
+                  >
+                <mat-hint>Add count</mat-hint>
+                @if (countFormControl.hasError('count') && !countFormControl.hasError('required')) {
+                  <mat-error>Minimum value is 1.</mat-error>
+                }
+                @if (countFormControl.hasError('required')) {
+                  <mat-error>Count is <strong>required</strong></mat-error>
+                }
+              </mat-form-field>
+
+              <p-toast></p-toast>
+
+              <button 
+              type="submit"
+              [disabled]="isLoading()"
+              >
+                    {{isLoading() ? 'Generating...' : 'Generate'}}
+            </button>
+        </form>
+    </div>
+</div>

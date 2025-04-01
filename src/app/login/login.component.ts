@@ -75,30 +75,24 @@ export class LoginComponent implements OnInit {
     if(this.emailFormControl.hasError('email') || this.emailFormControl.hasError('required') || this.passwordFormControl.hasError('required') || this.emailFormControl.value == null || this.passwordFormControl.value == null) return
     
     this.authService.login(this.emailFormControl.value, this.passwordFormControl.value)
-    .pipe(
-      catchError((error) => {
-        console.error('Login error:', error);
-  
-        // Extract the error message properly
-        const errorMessage = error?.error?.description || 'Login failed. Please try again.';
-        
-        this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: errorMessage });
-  
-        this.isLoading.set(false);
-        return of(null); // Prevents breaking the stream
-      })
-    )
-    .subscribe((res) => {
-      if (res && typeof res === 'object') {  // ✅ Ensure res is a valid object before parsing
-
-        this.router.navigate(['/'])
-  
-      } else {
-        console.warn('Unexpected response format:', res);
+    .subscribe({
+      next: (response) => {
+        console.log(response)
+        localStorage.setItem("jwtToken", response.token)
+        localStorage.setItem("refreshToken", response.refreshToken)
+        localStorage.setItem("user", JSON.stringify(response.user))
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message });
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error(error)
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.error?.description });
+        this.isLoading.set(false)
+      },
+      complete: () => {
+        this.isLoading.set(false)
       }
-
-      this.isLoading.set(false);
-    });
+    })
   
 
 }
