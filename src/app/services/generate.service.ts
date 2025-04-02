@@ -12,8 +12,11 @@ export class GenerateService {
   private generateStudentsUrl = 'http://localhost:8080/api/files/generate/'
 
   generateStudents(count: number): Observable<{ message: string; file: string; }> {
+    const token = localStorage.getItem('jwtToken');
+  
+    const headers = { 'Authorization': `Bearer ${token}` };
 
-    return this.http.post<{ message: string; file: string;}>(this.generateStudentsUrl + count, {}, { withCredentials: true });
+    return this.http.post<{ message: string; file: string;}>(this.generateStudentsUrl + count, {}, { headers });
     
   }
 }

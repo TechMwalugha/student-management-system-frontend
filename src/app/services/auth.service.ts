@@ -20,9 +20,8 @@ export class AuthService {
     const token = localStorage.getItem('jwtToken'); // ✅ Get token from local storage
     const headers = { 'Authorization': `Bearer ${token}` }; // ✅ Set authorization header
 
-    console.log(token)
-
-    if (!token) {
+    if (!token || token.trim() === "" || token === "undefined") {
+      console.log('No token found in local storage'); // ✅ Log if no token found
       return of(false); // ✅ If no token, user is NOT authenticated
     }
 
@@ -30,7 +29,9 @@ export class AuthService {
       .pipe(
         map(response => response.authenticated),  // ✅ Returns true if authenticated
         catchError((error) => {
-          console.log(error)
+          if(error?.error?.description === 'The JWT token has expired') {
+            return this.refreshToken();
+          }
           return of(false)
         }) // ✅ If error, assume user is NOT authenticated
       );
@@ -43,19 +44,41 @@ export class AuthService {
 
   logout() {
     const token = localStorage.getItem('jwtToken'); // ✅ Get token from local storage
+
+ 
     const headers = { 'Authorization': `Bearer ${token}` }; // ✅ Set authorization header
     this.http.post<{message: string}>(this.logoutUrl, {}, {headers})
     .subscribe({
       next: (response) => {
-        console.log(response.message)
-        // localStorage.removeItem('jwtToken'); // ✅ Remove token from local storage
-        // localStorage.removeItem('user'); // ✅ Remove user from local storage
+        console.log(response)
+        localStorage.removeItem('jwtToken'); // ✅ Remove token from local storage
+        localStorage.removeItem('user'); // ✅ Remove user from local storage
         this.router.navigate(['/login']); // ✅ Redirect to login page
       }, 
       error: (error) => {
         console.error(error);
       }
     })
+  }
+
+  refreshToken(): Observable<boolean> {
+
+    const refreshToken = localStorage.getItem('refreshToken'); // ✅ Get refresh token from local storage
+
+    if(!refreshToken) return of(false)
+
+    return this.http.post<{newAccessToken: string, refreshToken: string}>('http://localhost:8080/api/auth/refresh-token', {  }, { params: { refreshToken } }) // ✅ Fixed URL
+      .pipe(
+        map((response) => {
+          localStorage.setItem('jwtToken', response.newAccessToken); // ✅ Set new access token in local storage
+          localStorage.setItem('refreshToken', response.refreshToken); // ✅ Set new refresh token in local storage
+          return true;
+        }),
+        catchError((error) => {
+          console.error(error);
+          return of(false); // ✅ If error, assume user is NOT authenticated
+        })
+      );
   }
 
 }

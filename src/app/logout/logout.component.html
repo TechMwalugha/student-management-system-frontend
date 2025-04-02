@@ -1,9 +1,12 @@
 <div>
     <app-sidebar />
+    <app-header />
     <div class="content">
         <h1>Opps 😭 your leaving.</h1>
         <h2>Click the button below to logout</h2>
 
-        <button class="btn" (click)="logout()">Logout</button>
+        <button class="btn" (click)="logout()" [disabled]="isLoading()">
+            {{isLoading() ? 'logging out....' : 'Logut'}}
+        </button>
     </div>
 </div>

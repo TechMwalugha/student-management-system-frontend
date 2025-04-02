@@ -1,0 +1,24 @@
+$primaryColor: #5369FC;
+.header{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -10;
+
+    .header-text {
+        font-size: 14px;
+        font-weight: 300;
+        cursor: pointer;
+
+        span {
+            color: $primaryColor;
+        }
+    }
+}

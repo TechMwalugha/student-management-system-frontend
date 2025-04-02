@@ -32,5 +32,12 @@
                 background-color: #0056b3;
             }
         }
+
+        [disabled], .disabled {
+            pointer-events: none; /* Prevent clicking */
+            opacity: 0.6; /* Make it look faded */
+            cursor: not-allowed; /* Show "not-allowed" cursor */
+            filter: grayscale(50%); /* Optional: Slightly gray out */
+          }
     }
 }

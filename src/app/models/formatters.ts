@@ -1,0 +1,1 @@
+export const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0] : null;

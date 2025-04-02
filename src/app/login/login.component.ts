@@ -82,6 +82,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("refreshToken", response.refreshToken)
         localStorage.setItem("user", JSON.stringify(response.user))
         this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message });
+        this.isLoading.set(false)
         this.router.navigate(['/']);
       },
       error: (error) => {

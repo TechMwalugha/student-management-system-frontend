@@ -22,7 +22,7 @@ export const items = [
     {
         id: 5,
         title: "Student Report",
-        link: "/report",
+        link: "/students",
     },
     {
         id: 6,

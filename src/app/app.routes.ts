@@ -24,6 +24,27 @@ export const routes: Routes = [
         canActivate: [AuthGuardService]
     },
     {
+        path: 'process',
+        loadComponent: () => {
+            return import('./process/process.component').then(m => m.ProcessComponent);
+        },
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'upload',
+        loadComponent: () => {
+            return import('./upload/upload.component').then(m => m.UploadComponent);
+        },
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'students',
+        loadComponent: () => {
+            return import('./students/students.component').then(m => m.StudentsComponent);
+        },
+        canActivate: [AuthGuardService]
+    },
+    {
         path: 'logout',
         loadComponent: () => {
             return import('./logout/logout.component').then(m => m.LogoutComponent);

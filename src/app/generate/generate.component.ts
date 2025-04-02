@@ -18,6 +18,7 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import { GenerateService } from '../services/generate.service';
 import { catchError, map, of } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { HeaderComponent } from '../components/header/header.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -38,8 +39,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     MatButtonModule, 
     ToastModule, 
     CommonModule,
-    ToastModule,
     ButtonModule,
+    HeaderComponent,
   ],
   templateUrl: './generate.component.html',
   styleUrl: './generate.component.scss'
@@ -78,21 +79,7 @@ export class GenerateComponent  {
         console.log("Completed...")
       }
     })
-    // .pipe(
-    //   map((response: any) => {
-    //     console.log(response)
-    //   }),
-    //   catchError((error) => {
-    //     // Extract the error message properly
-    //             const errorMessage = error?.error?.description || 'Student generating failed. Please try again.';
-    //             console.log(error)
-    //             this.messageService.add({ severity: 'error', summary: 'Failed', detail: errorMessage });
-          
-    //             this.isLoading.set(false);
-    //             return of(null); // Prevents breaking the stream
-    //   })
-    // )
-
+  
   }
 
 }

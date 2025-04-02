@@ -1,0 +1,16 @@
+<div>
+    <app-sidebar></app-sidebar>
+    <app-header></app-header>
+    <div class="process-page">
+        <h1>Process</h1>
+        <h2>Click the button below to start the process</h2>
+
+        <p>The system will read the Excel file generated in (step (a) Data generation) and save it in a CSV file.</p>
+        <span>Note: Before saving the records, the system will update the student scores and add 10</span>
+
+        <p-toast></p-toast>
+        <button class="btn" (click)="startProcess()" [disabled]="isLoading()">
+            {{ isLoading() ? 'Processing...' : 'Start Process'}}
+        </button>
+    </div>
+</div>

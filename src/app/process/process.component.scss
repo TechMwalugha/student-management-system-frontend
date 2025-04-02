@@ -1,0 +1,36 @@
+$primaryColor: #5369FC;
+.process-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    h1, h2, p, span {
+        text-align: center;
+    }
+
+    p {
+        font: 400 16px 'Poppins', sans-serif;
+    }
+    span {
+        font: 300 14px 'Poppins', sans-serif;
+    }
+    button {
+        margin-top: 20px;
+        background-color: $primaryColor;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    [disabled], .disabled {
+        pointer-events: none; /* Prevent clicking */
+        opacity: 0.6; /* Make it look faded */
+        cursor: not-allowed; /* Show "not-allowed" cursor */
+        filter: grayscale(50%); /* Optional: Slightly gray out */
+      }
+}

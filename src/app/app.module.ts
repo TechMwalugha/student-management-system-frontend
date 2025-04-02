@@ -4,7 +4,6 @@ import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button'; 
 import { AppComponent } from './app.component'; // ✅ Import the standalone component
-
 @NgModule({
   imports: [ // ✅ Correct way for standalone component
     AppComponent,

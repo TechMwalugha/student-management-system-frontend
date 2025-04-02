@@ -1,0 +1,97 @@
+<div>
+    <app-sidebar />
+    <app-header />
+    <div class="content">
+        <div class="filter">
+            <input 
+            type="text" 
+            id="id"
+            placeholder="Search by ID"
+            (keyup)="onKey($event)"
+            >
+            <select name="class" id="class" (change)="onClassChange($event)">
+                <option disabled selected>Filter by class</option>
+                <option value="">All</option>
+                <option value="Class 1">Class 1</option>
+                <option value="Class 2">Class 2</option>
+                <option value="Class 3">Class 3</option>
+                <option value="Class 4">Class 4</option>
+                <option value="Class 5">Class 5</option>
+            </select>
+
+              <app-daterangerpicker (dateRangeChange)="onDateRangeChange($event)"/>
+        </div>
+
+        <div class="loader" *ngIf="isLoading()">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <table mat-table [dataSource]="students()" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+          
+            <!-- Position Column -->
+            <ng-container matColumnDef="studentId">
+              <th mat-header-cell *matHeaderCellDef> Id. </th>
+              <td mat-cell *matCellDef="let element"> {{element.studentId}} </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef> First Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+            </ng-container>
+          
+            <!-- Weight Column -->
+            <ng-container matColumnDef="lastName">
+              <th mat-header-cell *matHeaderCellDef> Last Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="dob">
+              <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
+              <td mat-cell *matCellDef="let element"> {{element.dob |  date:'yyyy-MM-dd' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="studentClass">
+              <th mat-header-cell *matHeaderCellDef> Class </th>
+              <td mat-cell *matCellDef="let element"> {{element.studentClass}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="score">
+              <th mat-header-cell *matHeaderCellDef> Score </th>
+              <td mat-cell *matCellDef="let element"> {{element.score}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let element">
+                <select name="action" id="action">
+                  <option value="edit">Edit</option>
+                  <option value="delete">Delete</option>
+                  <option value="view">View</option>
+                </select>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [length]="paginatorQuery()?.totalElements"
+              [pageIndex]="paginatorQuery()?.number"
+              [pageSize]="paginatorQuery()?.size"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page"
+              (page) = "handlePageEvent($event)"
+              >
+          </mat-paginator>
+          <p-toast></p-toast>
+    </div>
+</div>
