@@ -84,9 +84,9 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
 
-          <mat-paginator [length]="paginatorQuery()?.totalElements"
-              [pageIndex]="paginatorQuery()?.number"
-              [pageSize]="paginatorQuery()?.size"
+          <mat-paginator [length]="paginatorQuery().totalElements"
+              [pageIndex]="paginatorQuery().number"
+              [pageSize]="paginatorQuery().size"
               [pageSizeOptions]="[5, 10, 25, 100]"
               aria-label="Select page"
               (page) = "handlePageEvent($event)"

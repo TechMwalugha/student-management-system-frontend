@@ -163,8 +163,8 @@ export class StudentsComponent implements OnInit {
     this.isLoading.set(true)
     
     this.filter.set({
-      studentId: this.filter().studentId,
-      studentClass: e.target.value,
+      studentId: undefined,
+      studentClass: e.target.value ? e.target.value : '',
       startDate: this.filter().startDate,
       endDate: this.filter().endDate
     })
@@ -173,7 +173,7 @@ export class StudentsComponent implements OnInit {
       next: (response: any) => {
 
         if(!response) {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: `No students found that are in ${this.filter().studentClass} ${this.filter().startDate ? 'with that date range.' : '.'}` });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: `No students found that are in ${this.filter().studentClass ? this.filter().studentClass : 'the system '} ${this.filter().startDate ? 'with that date range.' : '.'}` });
           this.isLoading.set(false);
           return 
         }
@@ -201,11 +201,11 @@ export class StudentsComponent implements OnInit {
 
    // This function is triggered when the daterangerpicker emits a new date range.
    onDateRangeChange(dateRange: { startDate: Date | null; endDate: Date | null }) {
-   
-    if(!dateRange.startDate || !dateRange.endDate) return
+    
+    
     // Update the filter signal with new dates.
     this.filter.set({
-      studentId: this.filter().studentId,
+      studentId: undefined,
       studentClass: this.filter().studentClass,
       startDate: formatDate(dateRange.startDate),
       endDate: formatDate(dateRange.endDate)
