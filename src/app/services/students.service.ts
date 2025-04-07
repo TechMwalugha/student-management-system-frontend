@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { studentsType } from '../models/sidebar.todo';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,7 @@ export class StudentsService {
 
 
   getStudents() {
-    const token = localStorage.getItem('jwtToken'); // Retrieve the JWT token from local storage
-    const headers = { 'Authorization': `Bearer ${token}` };
-
-    return this.http.get<studentsType>(this.apiUrl, { headers });
+    return this.http.get<studentsType>(this.apiUrl);
   }
 
   getStudentsPage(
@@ -27,8 +25,6 @@ export class StudentsService {
     size: number,
     filters?: { studentId?: number; studentClass?: string; startDate?: string; endDate?: string }
   ) {
-    const token = localStorage.getItem('jwtToken');
-    const headers = { 'Authorization': `Bearer ${token}` };
 
     let params = new HttpParams()
       .set('page', page.toString())
@@ -50,6 +46,39 @@ export class StudentsService {
       }
     }
 
-    return this.http.get<studentsType>(this.apiUrl, { headers, params });
+    return this.http.get<studentsType>(this.apiUrl, { params });
   }
+
+  softDeleteStudent(studentId: number)  {
+
+   return this.http.delete<{message: string}>(`${this.apiUrl}/${studentId}`)
+
+  }
+
+  exportStudentReport(
+    page: number,
+    size: number,
+    filters?: { studentId?: number; studentClass?: string; startDate?: string; endDate?: string }
+  ): Observable<Blob> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+  
+    if (filters) {
+      if (filters.studentId) params = params.set('studentId', filters.studentId.toString());
+      if (filters.studentClass) params = params.set('studentClass', filters.studentClass);
+      if (filters.startDate) params = params.set('startDate', filters.startDate);
+      if (filters.endDate) params = params.set('endDate', filters.endDate);
+    }
+  
+    return this.http.get(`${this.apiUrl}/export`, {
+      params,
+      responseType: 'blob' // important for binary download
+    });
+  }
+
+  updateStudent(id: string, formData: FormData) {
+    return this.http.put<{ message: string }>(`http://localhost:8080/api/students/${id}`, formData);
+  }
+  
 }

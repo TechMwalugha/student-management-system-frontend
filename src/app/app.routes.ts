@@ -45,6 +45,20 @@ export const routes: Routes = [
         canActivate: [AuthGuardService]
     },
     {
+        path: 'students/view/:id',
+        loadComponent: () => {
+            return import('./students/view/view.component').then(m => m.ViewComponent);
+        },
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'students/edit/:id',
+        loadComponent: () => {
+            return import('./students/edit/edit.component').then(m => m.EditComponent)
+        },
+        canActivate: [AuthGuardService]
+    },
+    {
         path: 'logout',
         loadComponent: () => {
             return import('./logout/logout.component').then(m => m.LogoutComponent);

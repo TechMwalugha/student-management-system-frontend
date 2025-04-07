@@ -11,6 +11,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { formatDate } from '../models/formatters';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Router, RouterModule } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -30,7 +31,8 @@ export interface PeriodicElement {
     MatProgressBarModule,
     CommonModule,
     ToastModule,
-    DatePipe
+    DatePipe,
+    RouterModule
 ],
   templateUrl: './students.component.html',
   styleUrl: './students.component.scss'
@@ -65,7 +67,7 @@ export class StudentsComponent implements OnInit {
 
   studentsService = inject(StudentsService)
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService, private router: Router) {
 
   }
   
@@ -103,6 +105,7 @@ export class StudentsComponent implements OnInit {
     this.isLoading.set(true);
     this.studentsService.getStudentsPage(e.pageIndex, e.pageSize, this.filter()).subscribe({
       next: (response: any) => {
+        if(response) {
         this.students.set(response.content);
         this.paginatorQuery.set({
           last: response.last,
@@ -115,6 +118,7 @@ export class StudentsComponent implements OnInit {
           first: response.first,
           empty: response.empty
         })
+      }
         this.isLoading.set(false);
       },
       error: (error) => {
@@ -241,5 +245,56 @@ export class StudentsComponent implements OnInit {
       }
     });
   }
+
+  navigateToStudent(event: any, studentId: number, firstName: string) {
+
+    if (event.target.value === 'view') {
+      this.router.navigate(['/students/view', studentId]);
+    }
+
+    if(event.target.value === 'edit') {
+      this.router.navigate(['/students/edit', studentId]);
+    }
+
+    if(event.target.value === "delete") {
+      const isConfirm = confirm(`Are you sure you want to soft delete ${firstName}?`) 
+
+      if(!isConfirm) return
+
+      this.studentsService.softDeleteStudent(studentId).subscribe({
+        next: (response: any) => {
+          console.log(response)
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message });
+          this.router.navigate(['/students']);
+        },
+        error: (error) => {
+          console.error(error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error?.description });
+        }
+      })
+    }
+  }
+
+  exportStudentReport() {
+    this.studentsService.exportStudentReport(
+      this.paginatorQuery().number,
+      this.paginatorQuery().size,
+      this.filter()
+    ).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'filtered_students.xlsx';
+        link.click();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Student report exported successfully!' });
+      },
+      error: (error) => {
+        console.error(error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error exporting student report.' });
+      }
+    });
+  }  
+
 
 }

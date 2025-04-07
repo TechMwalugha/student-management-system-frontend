@@ -3,12 +3,13 @@ import { provideRouter } from '@angular/router';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 import { routes } from './app.routes';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { MessageService } from 'primeng/api';
 import {provideNativeDateAdapter} from '@angular/material/core';
+import { TokeninterceptorService } from './services/tokeninterceptor.service';
 
 
 export const appConfig: ApplicationConfig = {
@@ -26,6 +27,12 @@ export const appConfig: ApplicationConfig = {
       },
   }),
   provideNativeDateAdapter(),
-  MessageService
+  MessageService,
+  provideHttpClient(withInterceptorsFromDi()),
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokeninterceptorService,
+    multi: true
+  }
   ]
 };

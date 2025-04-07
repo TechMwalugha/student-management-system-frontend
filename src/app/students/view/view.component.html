@@ -1,0 +1,44 @@
+<div>
+    <app-sidebar />
+    <app-header />
+    <div class="container">
+    
+        <div class="content">
+            <h3>{{studentData().firstName}} Details</h3>
+    
+            <div class="image">
+                <img src="{{studentData().photoPath ? `http://localhost:8080/api/photos/${this.studentData().photoPath.split('\\').pop()}` : '/assets/profile-avatar.png'}}" alt="Profile Image" class="profile-image" />
+            </div>
+            <h5 class="student-id">ID: {{studentData().studentId}}</h5>
+    
+            <div class="details">
+                <div class="student-info">
+                    <div>
+                        <h5>Full Name:</h5>
+                        <p>{{studentData().firstName}} {{studentData().lastName}}</p>
+                    </div>
+                    <div>
+                        <h5>Date of Birth</h5>
+                        <p>{{studentData().dob | date:'yyyy-MM-dd'}} </p>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div>
+                        <h5>Class: </h5>
+                        <p>{{studentData().studentClass}}</p>
+                    </div>
+                    <div>
+                        <h5>Score: </h5>
+                        <p>{{studentData().score}}</p>
+                    </div>
+                </div>
+                <div>
+                    <h5>Status</h5>
+                    <p>{{studentData().status}} Active</p>
+                </div>
+            </div>
+    
+            <a href="{{'/students/edit/' + studentData().studentId}}">Edit</a>
+        </div>
+    </div>
+</div>

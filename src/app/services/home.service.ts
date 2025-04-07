@@ -11,9 +11,6 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   getStudents() {
-     const token = localStorage.getItem('jwtToken'); // ✅ Get token from local storage
-     const headers = { 'Authorization': `Bearer ${token}` }; 
-
-    return this.http.get<any[]>(this.getStudentsUrl, { headers })
+    return this.http.get<any[]>(this.getStudentsUrl)
   }
 }

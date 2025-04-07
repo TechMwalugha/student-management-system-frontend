@@ -77,7 +77,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.emailFormControl.value, this.passwordFormControl.value)
     .subscribe({
       next: (response) => {
-        console.log(response)
         localStorage.setItem("jwtToken", response.token)
         localStorage.setItem("refreshToken", response.refreshToken)
         localStorage.setItem("user", JSON.stringify(response.user))

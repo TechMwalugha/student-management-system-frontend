@@ -11,9 +11,6 @@ export class ProcessService {
   constructor(private http: HttpClient) { }
 
   saveAsCSV() {
-    const token = localStorage.getItem('jwtToken');
-  
-    const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.post<{message: string}>(this.processApiUrl, {}, { headers })
+    return this.http.post<{message: string}>(this.processApiUrl, {})
   }
 }

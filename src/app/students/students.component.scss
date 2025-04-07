@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $primaryColor: #5369FC;
 .content {
     .filter {
@@ -26,6 +28,20 @@ $primaryColor: #5369FC;
             margin: 0 1rem;
             flex: 1 1 0;
         }
+        .export-btn {
+            background-color: $primaryColor;
+            color: #fff;
+            padding: .5rem 1rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 5px $primaryColor;
+            transition: all .3s ease-in-out;
+            &:hover {
+                background-color:  color.adjust($primaryColor, $lightness: 15%);
+                box-shadow: 0 0 10px  color.adjust($primaryColor, $lightness: 15%);
+            }
+        }
     }
 
     #action{
@@ -34,6 +50,12 @@ $primaryColor: #5369FC;
         box-shadow: 0 0 5px #5369FC;
         padding: .5rem 1rem;
         border-radius: 10px;
+    }
+
+    .active {
+        background-color: #5369FC;
+        padding: 1rem;
+        border-radius: 50%;
     }
 
 }

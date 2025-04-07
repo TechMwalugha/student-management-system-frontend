@@ -1,0 +1,120 @@
+<div class="container">
+    <app-sidebar />
+    <app-header />
+
+   <div class="content">
+    <input type="file" id="fileUpload" (change)="onFileSelected($event)" class="hidden" />
+    <h4>Update {{studentData().firstName}} details below</h4>
+    <form action="">
+        <div class="image">
+          <img [src]="previewImage || (studentData().photoPath ? `http://localhost:8080/api/photos/${this.studentData().photoPath.split('\\').pop()}` : '/assets/profile-avatar.png')" alt="Profile Image" class="profile-image" />
+            <div class="image-upload">
+              <label for="fileUpload">
+                <i class="pi pi-plus"></i> 
+              </label>
+            </div> 
+        </div>
+
+        <mat-form-field class="input-field" appearance="fill">
+            <mat-label>{{studentData().firstName}}</mat-label>
+            <input
+              matInput
+              placeholder="Joe"
+              [formControl]="firstName"
+              (blur)="updateErrorMessage()"
+              required
+            />
+            <mat-hint>FirstName</mat-hint>
+            @if (firstName.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="input-field" appearance="fill">
+            <mat-label>{{studentData().lastName}}</mat-label>
+            <input
+              matInput
+              placeholder="Doe"
+              [formControl]="lastName"
+              (blur)="updateErrorMessage()"
+              required
+            />
+            <mat-hint>Last Name</mat-hint>
+            @if (firstName.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="input-field" appearance="fill">
+            <mat-label>{{studentData().dob | date:'yyyy-MM-dd'}}</mat-label>
+            <input
+              matInput
+              placeholder="2023-10-01"
+              [formControl]="dob"
+              (blur)="updateErrorMessage()"
+              type="date"
+              required
+            />
+            <mat-hint>Date of Birth</mat-hint>
+            @if (dob.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="input-field" appearance="fill">
+            <mat-label>{{studentData().studentClass}}</mat-label>
+            <input
+              matInput
+              placeholder="Class 1"
+              [formControl]="studentClass"
+              (blur)="updateErrorMessage()"
+              required
+            />
+            <mat-hint>Student Class</mat-hint>
+            @if (studentClass.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="input-field" appearance="fill">
+            <mat-label>{{studentData().score}}</mat-label>
+            <input
+              type="number"
+              matInput
+              placeholder="99"
+              [formControl]="score"
+              (blur)="updateErrorMessage()"
+              required
+            />
+            <mat-hint>Student Score</mat-hint>
+            @if (score.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="input-field" appearance="fill">
+            <mat-label>{{studentData().status}}</mat-label>
+            <input
+              type="number"
+              matInput
+              placeholder="0 | 1"
+              [formControl]="status"
+              (blur)="updateErrorMessage()"
+              required
+            />
+            <mat-hint>Student status</mat-hint>
+            @if (status.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+
+          <button 
+          mat-flat-button 
+          type="button" 
+          (click)="submitUpdate()"
+          [disabled]="isLoading()"
+          >{{isLoading() ? 'Updating....' : 'Update'}}</button>
+          <p-toast></p-toast>
+    </form>
+   </div>
+</div>
