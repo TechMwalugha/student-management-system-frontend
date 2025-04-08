@@ -4,6 +4,7 @@
     <div class="content">
         <p>Enter the number of students you want the system to generate</p>
         <p class="small">Note: The system will generate random names and DOB, class, score and status for the students.</p>
+        <span class="alert">Alert: if the count is over 100,000 the system may take upto 3 minutes to process</span>
         <form (ngSubmit)="onSubmit()">
             <mat-form-field class="example-full-width">
                 <mat-label>Number of students</mat-label>

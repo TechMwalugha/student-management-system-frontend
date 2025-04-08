@@ -7,6 +7,7 @@
 
         <p>The system will read the Excel file generated in (step (a) Data generation) and save it in a CSV file.</p>
         <span>Note: Before saving the records, the system will update the student scores and add 10</span>
+        <span class="alert">Alert: if the excel file contains rows over 100,000 the system may take upto 7 minutes to process</span>
 
         <p-toast></p-toast>
         <button class="btn" (click)="startProcess()" [disabled]="isLoading()">

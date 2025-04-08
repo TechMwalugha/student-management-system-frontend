@@ -15,9 +15,11 @@ export class TokeninterceptorService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('Intercepting request...')
 
-      if(this.authService.getJwtToken() && !request.url.includes('refresh-token')) {
-        request = this.addToken(request, this.authService.getJwtToken()!);
-      }
+    if (this.authService.getJwtToken() && (!request.url.includes('refresh-token') && !request.url.includes('login'))) {
+      console.log('Adding token to request...')
+      request = this.addToken(request, this.authService.getJwtToken()!);
+    }
+    
 
       return next.handle(request).pipe(catchError(error => {
         if(error instanceof HttpErrorResponse && error.status === 401 && error.error?.description === 'The JWT token has expired') {
@@ -43,7 +45,6 @@ export class TokeninterceptorService implements HttpInterceptor {
     console.log("Entered handle error.")
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      
       return this.authService.refreshToken().pipe(
         
         switchMap((token: any) => {
@@ -63,7 +64,7 @@ export class TokeninterceptorService implements HttpInterceptor {
         catchError(err => {
           console.error('Token refresh failed', err);
           this.isRefreshing = false;
-          this.authService.logout();
+          // this.authService.logout();
           return throwError(() => new Error('Refresh Token Failed'));
         })
       );
