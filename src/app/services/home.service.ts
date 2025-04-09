@@ -7,10 +7,10 @@ import { catchError, of } from 'rxjs';
 })
 export class HomeService {
 
-  getStudentsUrl =  'http://localhost:8080/api/students/all';
+  getStudentsUrl =  'http://localhost:8080/api/students/student-count';
   constructor(private http: HttpClient) { }
 
   getStudents() {
-    return this.http.get<any[]>(this.getStudentsUrl)
+    return this.http.get<any>(this.getStudentsUrl)
   }
 }

@@ -6,7 +6,11 @@
         <h2>Total number of students</h2>
 
         <div class="item">
-            {{students().length}}
+            <p *ngIf="isLoading()">
+                Loading the number of students. <br> please wait....
+                <mat-progress-bar mode="buffer"></mat-progress-bar>
+            </p>
+            {{TotalStudentsNo() === 0 ? '' : TotalStudentsNo()}}
         </div>
     </div>
 </div>

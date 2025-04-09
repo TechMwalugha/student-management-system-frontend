@@ -8,5 +8,11 @@ $primaryColor: #5369FC;
     .item {
         background-color: $primaryColor;
         padding: 1rem;
+
+        p {
+            text-align: center;
+            color: white;
+            
+        }
     }
 }
