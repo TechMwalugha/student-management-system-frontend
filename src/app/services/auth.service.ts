@@ -3,22 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  private readonly authCheckUrl = 'http://localhost:8080/api/auth/check'; // ✅ Fixed URL
-  private readonly loginUrl = 'http://localhost:8080/api/auth/login'; // ✅ Fixed URL
-  private readonly logoutUrl = 'http://localhost:8080/api/auth/logout'; // ✅ Fixed URL
+  private readonly baseUrl = `${environment.apiUrl}/auth`; // base URL
 
   constructor(private http: HttpClient, private router: Router) {}
 
   //  Secure way to check if user is authenticated
   isAuthenticated(): Observable<boolean> {
 
-    return this.http.get<{ authenticated: boolean, expired: false }>(this.authCheckUrl)
+    return this.http.get<{ authenticated: boolean, expired: false }>(`${this.baseUrl}/check`)
       .pipe(
         map(response => {
           return response.authenticated
@@ -36,12 +35,12 @@ export class AuthService {
 
   //  login method
   login(email: string, password: string): Observable<any> {
-    return this.http.post<string>(this.loginUrl, { email, password });
+    return this.http.post<string>(`${this.baseUrl}/login`, { email, password });
   }
 
   logout() {
 
-    this.http.post<{message: string}>(this.logoutUrl, {})
+    this.http.post<{message: string}>(`${this.baseUrl}/logout`, {})
     .subscribe({
       next: (response) => {
         console.log(response)
@@ -64,7 +63,7 @@ export class AuthService {
     if (!refreshToken) return throwError(() => new Error('No refresh token found'));
   
     return this.http.post<{ newAccessToken: string, refreshToken: string }>(
-      'http://localhost:8080/api/auth/refresh-token', 
+      `${this.baseUrl}/refresh-token`, 
       {}, 
       { params: { refreshToken } }
     ).pipe(

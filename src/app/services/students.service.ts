@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { studentsType } from '../models/sidebar.todo';
 import { Observable, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentsService {
 
-  private apiUrl = 'http://localhost:8080/api/students'; // Replace with your API URL
+  private apiUrl = `${environment.apiUrl}/students`; // Replace with your API URL
 
   
   constructor(private http: HttpClient) { 
@@ -78,7 +79,7 @@ export class StudentsService {
   }
 
   updateStudent(id: string, formData: FormData) {
-    return this.http.put<{ message: string }>(`http://localhost:8080/api/students/${id}`, formData);
+    return this.http.put<{ message: string }>(`${this.apiUrl}/students/${id}`, formData);
   }
   
 }

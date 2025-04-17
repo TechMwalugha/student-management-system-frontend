@@ -26,6 +26,11 @@ export const items = [
     },
     {
         id: 6,
+        title: "Notifications",
+        link: "/notifications",
+    },
+    {
+        id: 7,
         title: "Logout",
         link: "/logout",
     }

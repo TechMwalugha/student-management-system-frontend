@@ -7,7 +7,7 @@
     <h4>Update {{studentData().firstName}} details below</h4>
     <form action="">
         <div class="image">
-          <img [src]="previewImage || (studentData().photoPath ? `http://localhost:8080/api/photos/${this.studentData().photoPath.split('\\').pop()}` : '/assets/profile-avatar.png')" alt="Profile Image" class="profile-image" />
+          <img [src]="previewImage || (studentData().photoPath ? `${apiUrl}/photos/${this.studentData().photoPath.split('\\').pop()}` : '/assets/profile-avatar.png')" alt="Profile Image" class="profile-image" />
             <div class="image-upload">
               <label for="fileUpload">
                 <i class="pi pi-plus"></i> 

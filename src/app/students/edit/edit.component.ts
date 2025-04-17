@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-edit',
@@ -33,6 +34,8 @@ export class EditComponent implements OnInit {
 
   studentData: any = signal({})
   isLoading = signal(false)
+
+  apiUrl = environment.apiUrl
 
   readonly firstName = new FormControl('', [Validators.required]);
   readonly lastName = new FormControl('', [Validators.required]);

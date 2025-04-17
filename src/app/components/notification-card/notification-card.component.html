@@ -1,0 +1,34 @@
+<div class="notification-card">
+    <h2 class="id">{{id()}}</h2>
+    <div class="notification-header">
+        <h4>From: {{fromName()}}</h4>
+        <div class="icons">
+            <i 
+            class="pi pi-pencil" 
+            style="font-size: 1rem"
+            (click)="showDialog()"
+            ></i>
+            <p-dialog header="Update Notification" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+                <span class="p-text-secondary block mb-8">Update the message below.</span>
+                <div class="form-item-2">
+                    <label for="message" class="font-semibold w-24">Message</label>
+                    <textarea pInputText [(ngModel)]="updatedMessage" id="message" class="flex-auto" autocomplete="off"></textarea>
+                </div>
+                <div class="btns">
+                    <p-button [disabled]="isLoading()" label="Cancel" severity="secondary" (click)="visible = false" />
+                    <p-button [disabled]="isLoading()" label="{{isLoading() ? 'Saving...' : 'Save'}}" (click)="updateNotification()"></p-button>
+                </div>
+            </p-dialog>
+            <i 
+            class="pi pi-trash"
+            style="font-size: 1rem"
+            (click)="deleteNotification()"
+            ></i>
+        </div>
+    </div>
+    <p>{{message()}}</p>
+
+    <p class="to-tag">To: {{toName()}}</p>
+
+    <p-toast></p-toast>
+</div>

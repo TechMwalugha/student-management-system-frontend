@@ -7,7 +7,7 @@
             <h3>{{studentData().firstName}} Details</h3>
     
             <div class="image">
-                <img src="{{studentData().photoPath ? `http://localhost:8080/api/photos/${this.studentData().photoPath.split('\\').pop()}` : '/assets/profile-avatar.png'}}" alt="Profile Image" class="profile-image" />
+                <img src="{{studentData().photoPath ? `${apiUrl}/photos/${this.studentData().photoPath.split('\\').pop()}` : '/assets/profile-avatar.png'}}" alt="Profile Image" class="profile-image" />
             </div>
             <h5 class="student-id">ID: {{studentData().studentId}}</h5>
     
@@ -38,7 +38,7 @@
                 </div>
             </div>
     
-            <a href="{{'/students/edit/' + studentData().studentId}}">Edit</a>
+            <a href="{{`${apiUrl}/students/edit/${studentData().studentId}`}}">Edit</a>
         </div>
     </div>
 </div>

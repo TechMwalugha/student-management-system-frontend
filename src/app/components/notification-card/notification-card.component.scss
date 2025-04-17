@@ -1,0 +1,70 @@
+.notification-card {
+    padding: 1em;
+    margin: 0.5em 0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .notification-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5em;
+
+        .icons {
+            display: flex;
+            gap: 2em;
+
+            i {
+                font-size: .5em;
+                color: #007bff;
+                cursor: pointer;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: #0056b3;
+                }
+            }
+        }
+    }
+    h4 {
+        margin: 0;
+        font-size: 1.2em;
+    }
+    p {
+        margin: 0.5em 0 0;
+        font-size: 1em;
+    }
+
+    .id {
+        font-size: 0.8em;
+        color: #6c757d;
+    }
+
+    .to-tag {
+        font-size: 0.8em;
+        color: #6c757d;
+        margin-left: 2em;
+        font-style: italic;
+        text-align: right;
+    }
+
+    
+    .form-item-2 {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin: 2em 0;
+
+        input, textarea {
+            width: 100%;
+        }
+    }
+
+    .btns {
+        display: flex;
+        justify-content: end;
+        gap: 1em;
+    }
+
+}

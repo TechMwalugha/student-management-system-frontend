@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class GenerateService {
 
   constructor(private http: HttpClient) { }
 
-  private generateStudentsUrl = 'http://localhost:8080/api/files/generate/'
+  private generateStudentsUrl = `${environment.apiUrl}/files/generate/`
 
   generateStudents(count: number): Observable<{ message: string; file: string; }> {
 

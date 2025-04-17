@@ -4,6 +4,7 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { StudentsService } from '../../services/students.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-view',
@@ -19,6 +20,8 @@ export class ViewComponent implements OnInit {
   studentsService = inject(StudentsService)
 
   constructor(private router: ActivatedRoute) { }
+
+  apiUrl = environment.apiUrl
 
   private id : string = '';
 studentData : any = signal({})

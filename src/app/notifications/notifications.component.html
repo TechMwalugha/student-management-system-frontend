@@ -1,0 +1,41 @@
+<div>
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div>
+        <div class="content">
+            <h2 class="header">All Notifications</h2>
+
+            <div class="header-actions">
+                <h5>{{notifications.length}} notification{{`${notifications.length > 1 ? 's' : ''}`}}</h5>
+                <button class=" p-button" (click)="showDialog()">Create New Message</button>
+                <p-dialog header="Create Notification" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+                    <span class="p-text-secondary block mb-8">Enter the details below.</span>
+                    <div class="form-item mb-4">
+                        <label for="studentId" class="font-semibold w-24">Student Id</label>
+                        <input type="number" [(ngModel)]="studentId" pInputText id="studentId" class="flex-auto" autocomplete="off" />
+                    </div>
+                    <div class="form-item-2">
+                        <label for="message" class="font-semibold w-24">Message</label>
+                        <textarea pInputText [(ngModel)]="message" id="message" class="flex-auto" autocomplete="off"></textarea>
+                    </div>
+                    <div class="btns">
+                        <p-button [disabled]="isLoading()" label="Cancel" severity="secondary" (click)="visible = false" />
+                        <p-button [disabled]="isLoading()" label="{{isLoading() ? 'Saving...' : 'Save'}}" (click)="createNotification()"></p-button>
+                    </div>
+                </p-dialog>
+            </div>
+
+            <div class="notifications">
+                <app-notification-card
+                *ngFor="let notification of notifications; let i = index; trackBy: trackByIndex"
+                [fromName]='notification.user.fullName'
+                [message]="notification.message"
+                [id]="notification.id"
+                [toName]="notification.student.firstName + ' ' + notification.student.lastName"
+                ></app-notification-card>
+            </div>
+        </div>
+        <p-toast></p-toast>
+    </div>
+</div>

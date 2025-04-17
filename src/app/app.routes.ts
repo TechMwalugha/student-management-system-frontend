@@ -59,6 +59,12 @@ export const routes: Routes = [
         canActivate: [AuthGuardService]
     },
     {
+        path: 'notifications',
+        loadComponent: () => {
+            return import('./notifications/notifications.component').then(m => m.NotificationsComponent)
+        }
+    },
+    {
         path: 'logout',
         loadComponent: () => {
             return import('./logout/logout.component').then(m => m.LogoutComponent);
